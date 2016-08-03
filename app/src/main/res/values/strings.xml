@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Quotation</string>
+    <string name="drawerclose">Drawer Close</string>
+    <string name="drawerOpen">Drawer Open</string>
+</resources>
