@@ -1,22 +1,37 @@
 package com.example.bipin.quotation.activities;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.bipin.quotation.Fragments.Exit;
+import com.example.bipin.quotation.Fragments.Favourite;
+import com.example.bipin.quotation.Fragments.Home;
+import com.example.bipin.quotation.Fragments.Setting;
 import com.example.bipin.quotation.R;
+import com.example.bipin.quotation.adapters.FavouriteAdapter;
 import com.example.bipin.quotation.adapters.GroupAdapter;
 import com.example.bipin.quotation.pojos.Group;
 import com.example.bipin.quotation.utility.Constants;
@@ -34,6 +49,9 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
     private SwipeRefreshLayout pullToRef;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +71,91 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
         if (pullToRef != null)
             pullToRef.setOnRefreshListener(this);
 
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.categoryRv);
+        recyclerView = (RecyclerView) findViewById(R.id.categoryRv);
         adapter = new GroupAdapter(this);
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             recyclerView.setAdapter(adapter);
         }
 
+        navigationView= (NavigationView) findViewById(R.id.navigation_view);
+
+        menuItemColorGarney(navigationView);
+
+
+        //nav menu listner  and steps to jump to fragment
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                String title;
+                Fragment fragment;
+
+                switch(item.getItemId())
+                {
+                    case R.id.home:
+
+                        title="Home";
+                        fragment=new Home();
+                        break;
+                    case R.id.setting:
+                        title="Setting";
+                        fragment=new Setting();
+                        break;
+                    case R.id.exit:
+                        title="Exit";
+                        fragment=new Exit();
+                        break;
+                    case R.id.favourites:
+                        title="Favourites";
+                        fragment=new Favourite();
+                        break;
+
+                    default:
+                        title="defaults";
+                        fragment=null;
+                }
+                if (fragment!=null)
+                {
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                    if (getSupportActionBar()!=null)
+                    {
+                        getSupportActionBar().setTitle(title);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        drawerLayout.closeDrawers();
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    }
+                }
+                return false;
+            }
+        });
+
         sendJsonRequest();
 
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Log.i("tag", "rag");
+        if(item.getItemId() == android.R.id.home){
+
+            this.finish();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void menuItemColorGarney(NavigationView navigationView) {
+        navigationView.getMenu().findItem(R.id.home).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
+        navigationView.getMenu().findItem(R.id.setting).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
+        navigationView.getMenu().findItem(R.id.exit).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
+        navigationView.getMenu().findItem(R.id.favourites).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
+
+    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -146,22 +237,23 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
     }
 
     //to bring hamburger icon in action
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item != null && item.getItemId() == android.R.id.home) {
-            toggle();
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item != null && item.getItemId() == android.R.id.home) {
+//            toggle();
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-
-    private void toggle() {
-        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            drawerLayout.openDrawer(GravityCompat.START);
-        }
-    }
+//
+//    private void toggle() {
+//        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        } else {
+//            drawerLayout.openDrawer(GravityCompat.START);
+//        }
+//    }
 
 }

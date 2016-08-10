@@ -33,16 +33,17 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     public GroupAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        int[] bgColor = {ContextCompat.getColor(context, R.color.c1),
-                ContextCompat.getColor(context, R.color.c2), ContextCompat.getColor(context, R.color.c3),
-                        ContextCompat.getColor(context, R.color.c4)};
-        int[] image_collection = {R.mipmap.ic_supervisor_account_black_48dp, R.mipmap.ic_mood_bad_black_48dp, R.mipmap.ic_swap_vert_black_48dp, R.mipmap.ic_tag_faces_black_48dp};
-        //int [] bgColor={R.color.c1,R.color.c2,R.color.c3,R.color.c4};//it only gives the location of the color
-
+        //        int [] bgColor={R.color.c1,R.color.c2,R.color.c3,R.color.c4};//it only gives the location of the color
+//
 //        for(int id:image_collection){
 //
 //            imagesColors.add(new GroupImageColor(id,id));
 //        }
+        int[] bgColor = {ContextCompat.getColor(context, R.color.c1),
+                ContextCompat.getColor(context, R.color.c2), ContextCompat.getColor(context, R.color.c3),
+                ContextCompat.getColor(context, R.color.c4)};
+        int[] image_collection = {R.mipmap.ic_supervisor_account_black_48dp, R.mipmap.ic_mood_bad_black_48dp, R.mipmap.ic_swap_vert_black_48dp, R.mipmap.ic_tag_faces_black_48dp};
+
         for (int i = 0; i < image_collection.length; i++) {
             imagesColors.add(new GroupImageColor(image_collection[i], bgColor[i]));
         }

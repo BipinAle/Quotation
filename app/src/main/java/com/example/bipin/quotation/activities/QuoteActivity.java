@@ -39,6 +39,7 @@ public class QuoteActivity extends AppCompatActivity implements SwipeRefreshLayo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         ptorf = (SwipeRefreshLayout) findViewById(R.id.pullToRef);
         if (ptorf != null)
             ptorf.setOnRefreshListener(this);

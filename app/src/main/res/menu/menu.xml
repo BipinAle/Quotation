@@ -24,6 +24,13 @@
 
         </item>
 
+        <item
+            android:id="@+id/favourites"
+            android:title="Favourites"
+            android:icon="@mipmap/ic_favorite_black_18dp">
+
+        </item>
+
 
     </group>
 

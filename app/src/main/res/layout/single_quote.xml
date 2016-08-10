@@ -36,10 +36,10 @@
             android:text="thfoiadajslfd"
             android:textSize="17sp" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/favourite"
+            android:id="@+id/like"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:src="@mipmap/ic_favorite_border_black_18dp"
