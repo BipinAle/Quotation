@@ -35,6 +35,7 @@ import com.example.bipin.quotation.adapters.FavouriteAdapter;
 import com.example.bipin.quotation.adapters.GroupAdapter;
 import com.example.bipin.quotation.pojos.Group;
 import com.example.bipin.quotation.utility.Constants;
+import com.example.bipin.quotation.utility.Utility;
 import com.example.bipin.quotation.volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -80,7 +81,7 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
 
         navigationView= (NavigationView) findViewById(R.id.navigation_view);
 
-        menuItemColorGarney(navigationView);
+        Utility.menuItemColorGarney(navigationView);
 
 
         //nav menu listner  and steps to jump to fragment
@@ -149,13 +150,7 @@ public class GroupActivity extends AppCompatActivity implements SwipeRefreshLayo
         return super.onOptionsItemSelected(item);
     }
 
-    private void menuItemColorGarney(NavigationView navigationView) {
-        navigationView.getMenu().findItem(R.id.home).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
-        navigationView.getMenu().findItem(R.id.setting).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
-        navigationView.getMenu().findItem(R.id.exit).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
-        navigationView.getMenu().findItem(R.id.favourites).getIcon().setColorFilter(Color.BLACK,PorterDuff.Mode.SRC_IN);
 
-    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

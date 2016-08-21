@@ -3,6 +3,9 @@ package com.example.bipin.quotation.adapters;
 import android.content.Context;
 import android.content.Loader;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,17 +81,27 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.MyViewHolder
             if (v.getId() == R.id.like) {
 
                 SharedPreferences prefs = Utility.getPreferences(context);
+                Quote quote = data.get(getAdapterPosition());
+                String id=quote.getId();//it is easy to compare if the new_quote contains that id or not
 
-                Quote quote=data.get(getAdapterPosition());
+                String new_quote = quote.getContent()+"-"+id;
 
-                String new_quote = quote.getContent();
-                String previous_quote = prefs.getString("key","");
-                String hybrid_quote = previous_quote + ";;" + new_quote;
+                String previous_quote = prefs.getString(Utility.KEY, "");
+
+                String hybrid_quote;
+                if (previous_quote.contains(id)) {
+                    v.setBackgroundResource(R.drawable.heart);
+                   Toast.makeText(context,"It is already taken",Toast.LENGTH_LONG).show();
+                } else {
+                    hybrid_quote = new_quote + ";;" + previous_quote;//prv+new ==>>prev suru ma jailey khali nai huncha but not new
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("key", hybrid_quote).apply();
+                    editor.putString(Utility.KEY, hybrid_quote).apply();
+                }
 
             }
 
+
         }
     }
+
 }
